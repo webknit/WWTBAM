@@ -45,6 +45,12 @@ WWTBAM.Game = function()
 	var restart = $('.restart');
 	// This will show the amount of funds a player has
 	var bank = $('.bank');
+	// Fifty fifty button
+	var fiftyFifty = $('.fifty-fifty');
+	// Free Pass Button
+	var freePass = $('.free-pass');
+	// Lineline shared class
+	var lifeLine = $('.lifeline');
 	
 	// This is our question counter so we can go through each
 	Qnum = -1;
@@ -57,6 +63,17 @@ WWTBAM.Game = function()
 		
 		// If the restart button is clicked then we call the reStart() function
 		restart.click(reStart);
+		
+		// Free pass functionality
+		freePass.click(function(){
+		
+			// Hide the button
+			freePass.hide();
+			
+			// Jump to next question
+			nextQuestion();
+			
+		});
 
 	}
 	
@@ -67,6 +84,8 @@ WWTBAM.Game = function()
 		// If we're coming here for a second time it's going to add one onto the previous number 
 		// so the 2nd time this function is called the Qnum would be 1 therefore asking the 2nd question from the array
 		Qnum = Qnum + 1;
+		
+		console.log("qnum is " + Qnum)
 		
 		// Find out the total length of the questions, we need to know when to stop
 		var total = questions.length;
@@ -92,6 +111,8 @@ WWTBAM.Game = function()
 			restart.show();
 			// We don't want to see the question number here
 			questionNumber.hide();
+			//Hide the lifeline buttons
+			lifeLine.hide();
 			
 		}
 				
@@ -130,6 +151,38 @@ WWTBAM.Game = function()
 		// Once they click an answer we call the answerQuestion function 
 		$('.answers li').on('click', answerQuestion);
 		
+		// Fifty Fifty functionality
+		fiftyFifty.click(function(){
+		
+			// Hide the button
+			fiftyFifty.hide();
+			
+			// start a count as we only want to remove 2 answers
+			fiftyFiftycount = 0;
+			
+			//Loop through each li and check what the answers are
+			$(".answers li").each(function() {
+			
+				// If count is lower than 2 then we will remove 2 incorrect answers
+				if(fiftyFiftycount < 2) {
+				
+					// If the li answer is NOT equal to the correct answer then we can remove it
+					if($(this).data('answer').replace(/ /g,'').toLowerCase() != correctAnswer) {
+					
+						// Hide it
+						$(this).hide();
+						
+						// Add one to the count!
+						fiftyFiftycount = fiftyFiftycount + 1;
+						
+					}
+					
+				}
+				
+			});
+			
+		});
+		
 	}
 	
 	// This function detects if they answered correctly
@@ -162,6 +215,8 @@ WWTBAM.Game = function()
 			restart.show();
 			// We don't want to see the question number here
 			questionNumber.hide();
+			//Show the lifeline buttons
+			lifeLine.hide();
 		}
 				
 	}
@@ -179,6 +234,8 @@ WWTBAM.Game = function()
 		restart.hide();
 		// We do want to see the question number here
 		questionNumber.show();
+		//Show the lifeline buttons
+		lifeLine.show();
 		
 	}
 
