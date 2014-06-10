@@ -236,6 +236,10 @@ WWTBAM.Game = function()
 		questionNumber.show();
 		//Show the lifeline buttons
 		lifeLine.show();
+		// Show the button
+		fiftyFifty.show();
+		// Show the button
+		freePass.show();
 		
 	}
 
